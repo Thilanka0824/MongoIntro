@@ -115,13 +115,10 @@ db.blogs.updateMany({
 - Find all blogs that have the category "voluptas" and pull "voluptas" from the categories
 
 db.blogs.updateMany({
-    categories: {
-        $in: ["voluptas"]}
-    },
-{$pull:{
-    categories: "voluptas"
-    }
-
+    categories: {$in: ["voluptas"]}
+},{$pull:{
+    categories: "voluptas"},
+     $set: {lastModified: new Date()
 })
 
 - Find all blogs with "corrupti" in the categories and delete those blogs
