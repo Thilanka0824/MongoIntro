@@ -85,3 +85,47 @@ db.blogs.find({
         $in: ["qui"]
     }
 })
+
+
+- Find all blogs in which the lastModified does not exist and set it
+
+db.blogs.updateMany({
+   lastModified: {
+       $exists: false
+   }
+},{
+    $set:{
+        lastModified: new Date()
+    }
+})
+
+- From now on, all the following queries should update lastModified to be the current datetime 
+
+- Find all blogs created after May 2022 and add "lorem" as a new category in the categories array
+
+db.blogs.updateMany({
+    createdAt: {$gt: new Date("2022-05-01")},
+    {$addToSet: {
+        categories: "lorem"},
+        $set: {lastModified: new Date()}
+    }
+    
+})
+
+- Find all blogs that have the category "voluptas" and pull "voluptas" from the categories
+
+db.blogs.updateMany({
+    categories: {
+        $in: ["voluptas"]}
+    },
+{$pull:{
+    categories: "voluptas"
+    }
+
+})
+
+- Find all blogs with "corrupti" in the categories and delete those blogs
+
+db.blogs.deleteMany({
+    categories: {$in: ["corrupti"]}
+})
